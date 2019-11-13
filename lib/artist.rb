@@ -18,7 +18,7 @@ class Artist
   #   Song.all.select {|song| song.artist == self}
   # end
 
-   def genres(song)
+   def genres
      #binding.pry
     songs.map{|song| song.genre}
   end
@@ -27,8 +27,6 @@ class Artist
     song.artist = self unless song.artist
     @songs << song unless @songs.detect{|song|song == song}
   end
-  
- 
   
   def self.all
     @@all
@@ -47,6 +45,5 @@ class Artist
     artist_obj.save
     artist_obj
   end
-    
   
 end
