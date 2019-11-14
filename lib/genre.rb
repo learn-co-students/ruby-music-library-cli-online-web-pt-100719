@@ -1,7 +1,7 @@
 #genre has many artists through songs
 
 class Genre
-    # extend Concerns::Findable
+    extend Concerns::Findable
     attr_accessor :name
     # attr_reader :songs
     @@all = []
