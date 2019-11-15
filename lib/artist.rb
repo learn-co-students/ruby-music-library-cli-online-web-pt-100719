@@ -1,6 +1,8 @@
 require 'pry'
 class Artist
   
+  extend Concerns::Findable
+  
   attr_accessor :name 
   attr_reader :songs, :genres
   
@@ -9,23 +11,22 @@ class Artist
   def initialize(name)
     @name = name
     @songs = []
-  
   end
   
-  # def songs(song)
+  # def songs
   #     # add the song to songs
-      
+  #   #binding.pry
   #   Song.all.select {|song| song.artist == self}
   # end
 
-   def genres
+  def genres
      #binding.pry
-    songs.map{|song| song.genre}
+    songs.map{|song| song.genre}.uniq #w/o duplicates
   end
   
   def add_song(song)
     song.artist = self unless song.artist
-    @songs << song unless @songs.detect{|song|song == song}
+    @songs << song unless @songs.include?(song)
   end
   
   def self.all

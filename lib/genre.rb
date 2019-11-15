@@ -1,5 +1,7 @@
 class Genre
   
+  extend Concerns::Findable
+  
   attr_accessor :name, :songs
   
   @@all = []
@@ -9,8 +11,8 @@ class Genre
     @songs = []
   end
   
-  def songs
-    @songs
+  def artists
+    songs.map{|song| song.artist}.uniq #w/o duplicates
   end
   
   def self.all

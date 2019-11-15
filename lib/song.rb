@@ -1,6 +1,6 @@
 class Song
   
-  attr_accessor :name, :genre
+  attr_accessor :name, :genre, :filename
   attr_reader :artist
   
   @@all = []
@@ -11,7 +11,41 @@ class Song
     self.artist = artist if self.artist
     @genre = genre
     self.genre = genre if self.genre
-    #self.save
+    #@@all << self
+  end
+  
+  # def filename
+  #   self.filename = 
+  # end
+  
+  def self.create_from_filename(filename)
+    song = Song.new_from_filename(filename)
+    song.save
+  end
+  
+  def self.new_from_filename(filename)
+    #binding.pry
+    filename = filename.split(' - ')
+    filename[-1] = filename[-1].split('.').reject{|s| s == "mp3"}
+    filename = filename.flatten
+    
+    artist = Artist.find_or_create_by_name(filename[0])
+    genre = Genre.find_or_create_by_name(filename[-1])
+    
+    song = Song.new(filename[1], artist, genre)
+  end
+  
+  def self.find_or_create_by_name(name)
+    # self.create(name) unless self.all.include?(name)
+    if self.find_by_name(name) # 
+      self.find_by_name(name)
+    else
+      song = Song.create(name)
+    end
+  end
+  
+  def self.find_by_name(name)
+    self.all.detect{|song| song.name == name}
   end
   
   def genre=(genre)
