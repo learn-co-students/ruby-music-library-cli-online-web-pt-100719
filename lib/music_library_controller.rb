@@ -72,13 +72,14 @@ class MusicLibraryController
   
   def play_song
     $stdout.puts("Which song number would you like to play?")
-    song_number = nil
     song_number = gets
-    #binding.pry
     sorted_songs = Song.all.sort_by{|song| song.name}
-    if song_number.to_i >= 1 && song_number.to_i <= self.list_songs.count
-      $stdout.puts("Playing #{sorted_songs[song_number.to_i+1].name} by #{sorted_songs[song_number.to_i +1].artist.name}")
+    if song_number.to_i >= 1 && song_number.to_i <= sorted_songs.count
+      #binding.pry
+      $stdout.puts("Playing #{sorted_songs[song_number.to_i- 1].name} by #{sorted_songs[song_number.to_i- 1].artist.name}")
     end
+    #binding.pry
+
     
     
     # Song.all.sort_by{|song| song.name}.each_with_index do |song, i|
