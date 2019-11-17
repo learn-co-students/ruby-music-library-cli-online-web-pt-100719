@@ -48,17 +48,29 @@ class Song
   end 
 
   def genre=(genre_instance)
-    @genre = genre_instance
-
-    # if !(genre_instance.songs.include?(self))
-    #   genre_instance.songs << self
-    # end
-
-    # unless (genre_instance.songs.include?(self))
-    #   genre_instance.songs << self
-    # end  
+    @genre = genre_instance 
 
     genre_instance.songs << self unless
     genre_instance.songs.include?(self) 
   end
+
+  def self.new_from_filename(filename)
+    song_name = filename.split(" - ")[1]
+    artist_name = filename.split(" - ")[0]
+    genre_name = filename.split(" - ")[2].chomp(".mp3")
+
+    # song = self.new(song_name)
+    artist = Artist.find_or_create_by_name(artist_name)
+    genre = Genre.find_or_create_by_name(genre_name)
+    song = self.new(song_name, artist, genre)
+    
+    song
+  end
+
+  def self.create_from_filename(filename)
+    file = Song.new_from_filename(filename)
+    file.save
+    file
+  end
+
 end
