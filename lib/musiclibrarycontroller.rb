@@ -4,7 +4,7 @@ class MusicLibraryController
 
     def initialize(path = "./db/mp3s")
         new_importer = MusicImporter.new(path)
-        Song.all << new_importer.import
+        new_importer.import
     end
 
     def call 
@@ -42,22 +42,23 @@ class MusicLibraryController
     #CLI Methods
 
     def list_songs
-      # binding.pry
-       song_list = Song.all.sort_by {|a,b| a.name <=> b.name}
+       song_list = Song.all.sort { |a,b| a.name <=> b.name}
+        
        song_list.each.with_index(1) do |song, i|
         puts "#{i}. #{song.artist.name} - #{song.name} - #{song.genre.name}"
        end
     end
 
     def list_artists
-      artist_list = Artist.sort {|a,b| a.name <=> b.name}
+      artist_list = Artist.all.sort {|a,b| a.name <=> b.name}
+
       artist_list.each.with_index(1) do |artist, i|
        puts "#{i}. #{artist.name}"
       end
     end
 
     def list_genres
-      genre_list = Genre.sort {|a,b| a.name <=> b.name}
+      genre_list = Genre.all.sort {|a,b| a.name <=> b.name}
       genre_list.each.with_index(1) do |genre, i|
        puts "#{i}. #{genre.name}"
       end
@@ -66,7 +67,9 @@ class MusicLibraryController
     def list_songs_by_artist
       puts "Please enter the name of an artist:"
       artist_name = gets.strip
-      if artist_name = Artist.find_by_name(artist_name)
+
+      if artist = Artist.find_by_name(artist_name)
+        binding.pry
         artist.songs.sort {|a,b| a.name <=> b.name}.each_with_index(1) do |song , i|
           puts "#{i}. #{song.name} - #{song.genre.name}"
         end
