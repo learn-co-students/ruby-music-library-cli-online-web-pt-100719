@@ -8,7 +8,7 @@ Bundler.require
 # require_relative "../lib/artist.rb"
 # require_relative "../lib/genre.rb"
 
-module Concerns
-end
+# module Concerns
+# end
 
 require_all 'lib'
