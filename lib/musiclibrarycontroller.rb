@@ -69,29 +69,39 @@ class MusicLibraryController
       artist_name = gets.strip
 
       if artist = Artist.find_by_name(artist_name)
-        binding.pry
-        artist.songs.sort {|a,b| a.name <=> b.name}.each_with_index(1) do |song , i|
-          puts "#{i}. #{song.name} - #{song.genre.name}"
+        list = artist.songs.sort { |a,b| a.name <=> b.name}
+        list.each_with_index do |song , i|
+          puts "#{i+1}. #{song.name} - #{song.genre.name}"
+          i += 1
         end
       end
     end
 
     def list_songs_by_genre
       puts "Please enter the name of a genre:"
-      genre_name = gets.strip
-
-      if genre_name = Artist.find_by_name(genre_name)
-        genre.name.sort {|a,b| a.name <=> b.name}.each_with_index(1) do |genre , i|
-          puts "#{i}. #{song.artist.name} - #{song.name}"
+      genre_input = gets.strip
+      
+      if genre = Genre.find_by_name(genre_input)
+        list = genre.songs.sort {|a,b| a.name <=> b.name}
+        list.each_with_index do |song, i|
+          puts "#{i + 1}. #{song.artist.name} - #{song.name}"
+          i += 1
         end
       end
     end
 
     def play_song
       puts "Which song number would you like to play?"
-      song = gets.strip
+      song_name = gets.strip.to_i
 
+      songs = Song.all
+  
+      if (1..songs.length).include?(song_name)
+        song = Song.all.sort{ |a, b| a.name <=> b.name }[song_name - 1]
+      end
+  
 
-    end
+      puts "Playing #{song.name} by #{song.artist.name}" if song
+      end
 
 end
