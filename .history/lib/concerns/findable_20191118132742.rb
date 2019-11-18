@@ -1,6 +1,3 @@
-require 'bundler'
-Bundler.require
-
 module Concerns
   module Findable
     def find_by_name(name)
@@ -11,6 +8,4 @@ module Concerns
       self.find_by_name(name) || self.create(name) # Finds or creates instance
     end
   end
-end
-
-require_all 'lib'
+end 
