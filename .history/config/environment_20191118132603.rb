@@ -3,6 +3,7 @@ Bundler.require
 
 module Concerns
   module Findable
+    
     def find_by_name(name)
       self.all.detect {|a| a.name == name} # Iterated through @@all to find name
     end
@@ -11,6 +12,5 @@ module Concerns
       self.find_by_name(name) || self.create(name) # Finds or creates instance
     end
   end
-end
-
+end 
 require_all 'lib'
