@@ -18,26 +18,23 @@ class MusicLibraryController
       puts "To quit, type 'exit'."
       puts "What would you like to do?"
       user_input = gets.chomp
-      case user_input
-      when 'list songs'
-        list_songs
-      when 'list artists'
-        list_artists
-      when 'list genres'
-        list_genres
-      when 'list artist'
-        list_songs_by_artist
-      when 'list genre'
-        list_songs_by_genre
-      when 'play song'
-        play_song
-      end
+    case
+    when user_input == 'list songs'
+      list_songs
+    when user_input == 'list artists'
+      list_artists
+    when user_input == 'list genres'
+      list_genres
+    when user_input == 'list artist'
+      list_artist
+    when user_input == 'list artist'
+      list_songs_by_artist
     end
+  end
   end
 
   def list_songs
-    # binding.pry
-    Song.all.sort {|a, b| a.name <=> b.name}.each.with_index{|song, index| puts "#{index + 1}. #{song.artist.name} - #{song.name} - #{song.genre.name}"}
+    Song.all.sort{|a, b| a.name <=> b.name}.each.with_index{|song, index| puts "#{index+1}. #{song.artist.name} - #{song.name} - #{song.genre.name}"}
   end
   
   def list_artists
@@ -80,9 +77,15 @@ class MusicLibraryController
   def play_song
     puts "Which song number would you like to play?"
     song_input = gets.chomp
-    if (1..Song.all.length).include?(song_input.to_i) && song_input.class == Integer
-      song = Song.all.sort{|a, b| a.name <=> b.name}[song_input.to_i - 1]
-      puts "Playing #{song.artist.name} by #{song.name}"
+    if (1..Song.all.length).include?(song_input.to_i)
+      song = Song.all.sort{|a, b| a.name <=> b.name}[song_input.to_i]
+      puts "Playing #{song.name} by #{song.artist.name}"
+    else
+      nil
     end
   end
+
+  # sorted_songs = Song.all.sort_by do |song| 
+  #   song.name
+  # end
 end

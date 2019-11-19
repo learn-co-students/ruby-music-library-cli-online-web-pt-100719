@@ -2,7 +2,6 @@ require 'pry'
 
 class Song
   attr_accessor :name, :artist, :genre
-  extend Concerns::Findable
   @@all = []
   def initialize(name, artist = nil, genre = nil)
     @name = name
@@ -49,13 +48,14 @@ class Song
     end
   end
 
-  # def self.find_by_name(name_of_song)
-  #   @@all.detect {|song_name_obj| song_name_obj.name == name_of_song}
-  # end
+  def self.find_by_name(name_of_song)
+    @@all.detect {|song_name_obj| song_name_obj.name == name_of_song}
+    binding.pry
+  end
 
-  # def self.find_or_create_by_name(name)
-  #   self.find_by_name(name) || self.create(name) # Finds or creates instance
-  # end
+  def self.find_or_create_by_name(name)
+    self.find_by_name(name) || self.create(name) # Finds or creates instance
+  end
 
   def self.new_from_filename(filename)
     song_name = filename.split(" - ")[1]
@@ -70,6 +70,7 @@ class Song
   def self.create_from_filename(create_filename)
     @@all << self.new_from_filename(create_filename)
   end
+
 
 end  
 # class Song

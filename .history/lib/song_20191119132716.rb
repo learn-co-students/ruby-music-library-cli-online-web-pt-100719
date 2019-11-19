@@ -2,7 +2,6 @@ require 'pry'
 
 class Song
   attr_accessor :name, :artist, :genre
-  extend Concerns::Findable
   @@all = []
   def initialize(name, artist = nil, genre = nil)
     @name = name
