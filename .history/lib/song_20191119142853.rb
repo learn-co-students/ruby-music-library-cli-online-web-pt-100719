@@ -1,0 +1,65 @@
+require 'pry'
+
+class Song
+  attr_accessor :name, :artist, :genre
+  extend Concerns::Findable
+  @@all = []
+  def initialize(name, artist = nil, genre = nil)
+    @name = name
+    @artist = artist
+    self.artist = artist if artist
+    self.genre = genre if genre
+  end
+
+  def self.all #Class Method
+    @@all
+  end
+
+  def self.destroy_all #Class Method
+    @@all.clear
+  end
+
+  def save #Instance method
+    @@all << self
+  end
+
+  def self.create(song_name)
+    new_song = self.new(song_name)
+    new_song.save
+    new_song
+  end
+  
+  def artist
+    @artist
+  end
+
+  def artist=(artist)
+    @artist = artist
+    artist.add_song(self)
+  end
+  
+  def genre
+    @genre
+  end
+
+  def genre=(genre)
+    @genre = genre
+    unless genre.songs.include?(self) # If genre already created, nil
+      genre.songs << self # If genre isn't already created, push self
+    end
+  end
+
+  def self.new_from_filename(filename)
+    song_name = filename.split(" - ")[1]
+    artist_obj = filename.split(" - ")[0]
+    genre_obj = filename.split(" - ")[2].chomp(".mp3")
+    artist = Artist.find_or_create_by_name(artist_obj)
+    genre = Genre.find_or_create_by_name(genre_obj)
+    song = Song.new(song_name, artist, genre)
+  end
+
+  def self.create_from_filename(create_filename)
+    @@all << self.new_from_filename(create_filename)
+  end
+
+end  

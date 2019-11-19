@@ -1,6 +1,8 @@
 require 'bundler'
 Bundler.require
 
+require_all 'lib'
+
 module Concerns
   module Findable
     def find_by_name(name)
@@ -10,7 +12,14 @@ module Concerns
     def find_or_create_by_name(name)
       self.find_by_name(name) || self.create(name) # Finds or creates instance
     end
-  end
-end
 
-require_all 'lib'
+  # module ClassMethods
+  #   def self.destroy_all
+  #     @@all.clear
+  #   end
+  #   def self.all
+  #     @@all
+  #   end
+
+  end# end
+end

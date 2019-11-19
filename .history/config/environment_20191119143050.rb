@@ -11,6 +11,16 @@ module Concerns
       self.find_by_name(name) || self.create(name) # Finds or creates instance
     end
   end
+
+  # module ClassMethods
+  #   def self.destroy_all
+  #     @@all.clear
+  #   end
+  #   def self.all
+  #     @@all
+  #   end
+
+  # end
 end
 
 require_all 'lib'
