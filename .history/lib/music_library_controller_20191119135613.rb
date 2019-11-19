@@ -36,25 +36,34 @@ class MusicLibraryController
   end
 
   def list_songs
-    Song.all.sort{|a, b| a.name <=> b.name}.each.with_index do |song, index| # Sorts song instances by alphabetical name
+    Song.all.sort{|a, b| a.name <=> b.name}.uniq.each.with_index do |song, index|
       puts "#{index + 1}. #{song.artist.name} - #{song.name} - #{song.genre.name}"
     end
   end
   
   def list_artists
-    Artist.all.sort{|a, b| a.name <=> b.name}.each.with_index(1){|song, index| puts "#{index}. #{song.name}"}
+    Artist.all.sort{|a, b| a.name <=> b.name}.each.with_index{|song, index| puts "#{index + 1}. #{song.name}"}
+    # sorted_artists = Artist.all.sort{|a, b| a.artist <=> b.artist}.each.with_index(1){|song, index| puts "#{index}. #{song}"} 
+    # sorted_artists.each.with_index(1) do |artist, index|
+    #   puts "#{index}. #{artist.name}"
+    # end
   end
 
   def list_genres
-    Genre.all.sort_by{|genre| genre.name}.each.with_index(1){|genre, index| puts "#{index}. #{genre.name}"}
+    sorted_genres = Genre.all.sort_by do |genre|
+      genre.name
+    end
+    sorted_genres.each.with_index(1) do |genre, index|
+      puts "#{index}. #{genre.name}"
+    end
   end
 
   def list_songs_by_artist
     puts "Please enter the name of an artist:"
     artist_input = gets.chomp
-    if artist = Artist.find_by_name(artist_input) # Finds artist by artist_input from user
-      artist.songs.sort{|a, b| a.name <=> b.name}.each.with_index(1) do |song, index| # Sorts artist songs
-        puts "#{index}. #{song.name} - #{song.genre.name}" # puts index, song name and song genre for user
+    if artist = Artist.find_by_name(artist_input)
+      artist.songs.sort{|a, b| a.name <=> b.name}.each.with_index(1) do |song, index|
+        puts "#{index}. #{song.name} - #{song.genre.name}"
       end
     end
   end
@@ -62,9 +71,9 @@ class MusicLibraryController
   def list_songs_by_genre
     puts "Please enter the name of a genre:"
     genre_input = gets.chomp
-    if genre = Genre.find_by_name(genre_input) # Finds genre by genre_input from user
+    if genre = Genre.find_by_name(genre_input)
       genre.songs.sort{|a, b| a.name <=> b.name}.each.with_index(1) do |song, index|
-        puts "#{index}. #{song.artist.name} - #{song.name}" # puts songs artist name and song name for user
+        puts "#{index}. #{song.artist.name} - #{song.name}"
       end
     end
   end
@@ -72,9 +81,11 @@ class MusicLibraryController
   def play_song
     puts "Which song number would you like to play?"
     song_input = gets.chomp.to_i
-    if (1..Song.all.length).include?(song_input) # If song_input integer is in range of 1 to Song.all.length
-      song = Song.all.sort{|a, b| a.name <=> b.name}[song_input - 1] # Sort songs by name and index song_input integer minus 1 (Index starts at 0)
-      puts "Playing #{song.name} by #{song.artist.name}"
+    if song_input < 0 && song_input <= Song.all.length
+      song = Song.all.sort{|a, b| a.name <=> b.name}
+      new = song[song_input - 1]
+      puts "Playing #{new.artist.name} by #{new.name}"
     end
+    binding.pry
   end
 end

@@ -49,13 +49,23 @@ class Song
     end
   end
 
+  # def self.find_by_name(name_of_song)
+  #   @@all.detect {|song_name_obj| song_name_obj.name == name_of_song}
+  # end
+
+  # def self.find_or_create_by_name(name)
+  #   self.find_by_name(name) || self.create(name) # Finds or creates instance
+  # end
+
   def self.new_from_filename(filename)
     song_name = filename.split(" - ")[1]
     artist_obj = filename.split(" - ")[0]
     genre_obj = filename.split(" - ")[2].chomp(".mp3")
-    artist = Artist.find_or_create_by_name(artist_obj)
-    genre = Genre.find_or_create_by_name(genre_obj)
-    song = Song.new(song_name, artist, genre)
+    # song = self.find_or_create_by_name(song_name)
+    # song.artist = Artist.find_or_create_by_name(artist_obj)
+    # song.genre = Genre.find_or_create_by_name(genre_obj)
+    song = self.new(song_name, artist_obj, genre_obj)
+    # song
   end
 
   def self.create_from_filename(create_filename)

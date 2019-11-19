@@ -1,6 +1,6 @@
 class Genre
   extend Concerns::Findable
-  extend Concerns::ClassMethods
+  include Concerns::ClassMethods
   attr_accessor :name
   @@all = []
   def initialize(name)
@@ -12,9 +12,9 @@ class Genre
     @@all
   end
 
-  def self.destroy_all
-    @@all.clear
-  end
+  # def self.destroy_all
+  #   @@all.clear
+  # end
 
   def save
     @@all << self

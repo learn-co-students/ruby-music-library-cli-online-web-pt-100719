@@ -12,15 +12,15 @@ module Concerns
     end
   end
 
-  # module ClassMethods
-  #   def self.destroy_all
-  #     @@all.clear
-  #   end
-  #   def self.all
-  #     @@all
-  #   end
+  module ClassMethods
+    def self.destroy_all
+      @@all.clear
+    end
+    def self.all
+      @@all
+    end
 
-  # end
+  end
 end
 
 require_all 'lib'
