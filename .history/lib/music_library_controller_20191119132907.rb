@@ -36,10 +36,7 @@ class MusicLibraryController
   end
 
   def list_songs
-    Song.all.sort |a, b| a.name <=> b.name}.each.with_index do |song, index|
-      puts "#{index + 1}. #{song.artist.name} - #{song.name} - #{song.genre.name}"
-    end
-    binding.pry
+    Song.all.sort {|a, b| a.name <=> b.name}.each.with_index{|song, index| puts "#{index + 1}. #{song.artist.name} - #{song.name} - #{song.genre.name}"}
   end
   
   def list_artists
