@@ -1,5 +1,8 @@
 require "spec_helper"
 
+class Artist
+  attr_accessor :name, :song
+
 describe "Artist" do
   let(:artist) { Artist.new("Neutral Milk Hotel") }
 

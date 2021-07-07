@@ -1,5 +1,8 @@
 require "spec_helper"
 
+class Genre
+  attr_accessor :name, :song 
+
 describe "Genre" do
   let(:genre) { Genre.new("indie rock") }
 
